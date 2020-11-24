@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class InventoryServiceImpl implements InventoryService {
     private final InventoryDao inventoryDao;
-
     public InventoryServiceImpl(InventoryDao inventoryDao) {
         this.inventoryDao = inventoryDao;
     }

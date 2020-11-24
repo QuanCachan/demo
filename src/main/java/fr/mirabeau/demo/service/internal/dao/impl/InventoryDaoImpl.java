@@ -13,13 +13,13 @@ public class InventoryDaoImpl implements InventoryDao {
     @Override
     public Inventory getInventoryByName(String name) {
         try (IDocumentSession session = DocumentStoreHolder.getStore().openSession()) {
-            List<Inventory> results = (List<Inventory>) session.query(Inventory.class)
+            List<Inventory> results =  session.query(Inventory.class)
                     .whereEquals("name", name)
                     .toList(); // send query
             System.out.println("size: " + results.size());
             return results.get(0);
         } catch (Exception exception) {
-            System.out.println("exception while crawling database");
+            System.out.println("exception while crawling database ==> " +exception.getMessage());
         }
         return null;
 
