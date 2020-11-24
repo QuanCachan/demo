@@ -8,9 +8,9 @@ public interface ZoneDao {
     /**
      * Get zone by given name
      * @param name : zone name
-     * @return Zone with the same name
+     * @return List of Zone with the same name
      */
-    Zone getZoneByName(String name);
+    List<Zone> getZoneByName(String name);
 
     List<Zone> getAllZones();
 }

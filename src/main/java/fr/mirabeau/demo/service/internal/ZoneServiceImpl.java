@@ -16,7 +16,7 @@ public class ZoneServiceImpl implements ZoneService {
 
 
     @Override
-    public Zone getZoneByName(String name) {
+    public List<Zone> getZoneByName(String name) {
         return zoneDao.getZoneByName(name);
     }
 

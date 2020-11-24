@@ -10,7 +10,7 @@ public interface ZoneService {
      * @param name : Zone name
      * @return Zone with the same name
      */
-    Zone getZoneByName(String name);
+    List<Zone> getZoneByName(String name);
 
     List<Zone> getAllZones();
 }

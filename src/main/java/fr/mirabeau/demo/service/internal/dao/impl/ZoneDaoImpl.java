@@ -12,14 +12,13 @@ import java.util.List;
 @Repository
 public class ZoneDaoImpl implements ZoneDao {
     @Override
-    public Zone getZoneByName(String name) {
+    public List<Zone> getZoneByName(String name) {
         try (IDocumentSession session = DocumentStoreHolder.getStore().openSession()) {
-            List<Zone> results = (List<Zone>) session.query(Zone.class)
+            List<Zone> results = session.query(Zone.class)
                     .whereEquals("name", name)
                     .toList(); // send query
-            System.out.println("size: " + results.size());
-            if(results == null || results.isEmpty()) return null;
-            return results.get(0);
+            session.close();
+            return results;
         } catch (Exception exception) {
             System.out.println("exception while crawling database ==> " + exception.getMessage());
         }
@@ -29,7 +28,7 @@ public class ZoneDaoImpl implements ZoneDao {
     @Override
     public List<Zone> getAllZones() {
         try (IDocumentSession session = DocumentStoreHolder.getStore().openSession()) {
-            List<Zone> results = (List<Zone>) session.query(Zone.class)
+            List<Zone> results = session.query(Zone.class)
                     .toList(); // send query
             System.out.println("results.size : " + results.size());
             return results;
