@@ -10,6 +10,7 @@ import java.util.List;
 @Service
 public class ZoneServiceImpl implements ZoneService {
     private final ZoneDao zoneDao;
+
     public ZoneServiceImpl(ZoneDao zoneDao) {
         this.zoneDao = zoneDao;
     }
@@ -23,6 +24,11 @@ public class ZoneServiceImpl implements ZoneService {
     @Override
     public List<Zone> getAllZones() {
         return zoneDao.getAllZones();
+    }
+
+    @Override
+    public Zone createZone(Zone zone) {
+        return zoneDao.createZone(zone);
     }
 
 
