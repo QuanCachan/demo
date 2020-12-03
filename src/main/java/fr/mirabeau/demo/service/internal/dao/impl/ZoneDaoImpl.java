@@ -22,15 +22,10 @@ public class ZoneDaoImpl implements ZoneDao {
 
     @Override
     public List<Zone> getAllZones() {
-        //TODO remove try/catch
-        try (IDocumentSession session = DocumentStoreHolder.getStore().openSession()) {
-            List<Zone> results = session.query(Zone.class)
-                    .toList(); // send query
-            return results;
-        } catch (Exception exception) {
-            System.out.println("exception while crawling database ==> " + exception.getMessage());
-        }
-        return null;
+        IDocumentSession session = DocumentStoreHolder.getStore().openSession();
+        List<Zone> results = session.query(Zone.class)
+                .toList(); // send query
+        return results;
     }
 
     @Override

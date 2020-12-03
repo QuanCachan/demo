@@ -14,9 +14,9 @@ public interface ZoneService {
     List<Zone> getZoneByName(String name);
 
     /**
-     * Get all ZONE by given name
+     * Get all ZONES
      *
-     * @return Zone with the same name
+     * @return all Zones
      */
     List<Zone> getAllZones();
 

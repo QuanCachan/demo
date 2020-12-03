@@ -1,16 +1,8 @@
 package fr.mirabeau.demo;
 
-import fr.mirabeau.demo.entity.Inventory;
 import fr.mirabeau.demo.entity.Zone;
-import fr.mirabeau.demo.service.internal.dao.impl.dbconnection.DocumentStoreHolder;
-import net.ravendb.client.documents.session.IDocumentSession;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 @SpringBootApplication
 public class DemoApplication {

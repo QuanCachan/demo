@@ -11,17 +11,20 @@ import java.util.List;
 @Repository
 public class InventoryDaoImpl implements InventoryDao {
     @Override
-    public Inventory getInventoryByName(String name) {
-        try (IDocumentSession session = DocumentStoreHolder.getStore().openSession()) {
-            List<Inventory> results =  session.query(Inventory.class)
-                    .whereEquals("name", name)
-                    .toList(); // send query
-            System.out.println("size: " + results.size());
-            return results.get(0);
-        } catch (Exception exception) {
-            System.out.println("exception while crawling database ==> " +exception.getMessage());
-        }
-        return null;
+    public List<Inventory> getInventoryByName(String name) {
+        IDocumentSession session = DocumentStoreHolder.getStore().openSession();
+        List<Inventory> results = session.query(Inventory.class)
+                .whereEquals("name", name)
+                .toList(); // send query
+        session.close();
+        return results;
+    }
 
+    @Override
+    public List<Inventory> getAllInventories() {
+        IDocumentSession session = DocumentStoreHolder.getStore().openSession();
+        List<Inventory> results = session.query(Inventory.class)
+                .toList(); // send query
+        return results;
     }
 }

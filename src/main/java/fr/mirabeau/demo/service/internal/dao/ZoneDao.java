@@ -14,9 +14,9 @@ public interface ZoneDao {
     List<Zone> getZoneByName(String name);
 
     /**
-     * Get all ZONE by given name
+     * Get all ZONES
      *
-     * @return Zone with the same name
+     * @return all zones
      */
     List<Zone> getAllZones();
 
