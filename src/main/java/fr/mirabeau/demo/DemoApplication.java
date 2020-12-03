@@ -1,13 +1,12 @@
 package fr.mirabeau.demo;
 
-import fr.mirabeau.demo.entity.Zone;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class DemoApplication {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 		/*try (IDocumentSession session = DocumentStoreHolder.getStore().openSession()) {
 			Inventory inventory = new Inventory();
 			inventory.setName("EntrepoteTest");
@@ -34,6 +33,6 @@ public class DemoApplication {
 		}catch (Exception e){
 			System.out.println("###e ==> " +e.getMessage());
 		}*/
-		SpringApplication.run(DemoApplication.class, args);
-	}
+        SpringApplication.run(DemoApplication.class, args);
+    }
 }
