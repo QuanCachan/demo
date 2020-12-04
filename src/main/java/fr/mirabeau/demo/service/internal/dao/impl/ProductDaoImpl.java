@@ -1,7 +1,7 @@
 package fr.mirabeau.demo.service.internal.dao.impl;
 
-import fr.mirabeau.demo.entity.Inventory;
-import fr.mirabeau.demo.service.internal.dao.InventoryDao;
+import fr.mirabeau.demo.entity.Product;
+import fr.mirabeau.demo.service.internal.dao.ProductDao;
 import fr.mirabeau.demo.service.internal.dao.impl.dbconnection.DocumentStoreHolder;
 import net.ravendb.client.documents.session.IDocumentSession;
 import org.springframework.stereotype.Repository;
@@ -9,11 +9,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class InventoryDaoImpl implements InventoryDao {
+public class ProductDaoImpl implements ProductDao {
+
     @Override
-    public List<Inventory> getInventoryByName(String name) {
+    public List<Product> getProductByName(String name) {
         IDocumentSession session = DocumentStoreHolder.getStore().openSession();
-        List<Inventory> results = session.query(Inventory.class)
+        List<Product> results = session.query(Product.class)
                 .whereEquals("name", name)
                 .toList(); // send query
         session.close();
@@ -21,9 +22,9 @@ public class InventoryDaoImpl implements InventoryDao {
     }
 
     @Override
-    public List<Inventory> getAllInventories() {
+    public List<Product> getAllProducts() {
         IDocumentSession session = DocumentStoreHolder.getStore().openSession();
-        return session.query(Inventory.class)
+        return session.query(Product.class)
                 .toList();
     }
 }

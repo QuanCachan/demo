@@ -23,9 +23,8 @@ public class ZoneDaoImpl implements ZoneDao {
     @Override
     public List<Zone> getAllZones() {
         IDocumentSession session = DocumentStoreHolder.getStore().openSession();
-        List<Zone> results = session.query(Zone.class)
-                .toList(); // send query
-        return results;
+        return session.query(Zone.class)
+                .toList();
     }
 
     @Override
