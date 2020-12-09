@@ -1,6 +1,7 @@
 package fr.mirabeau.demo.service;
 
 import fr.mirabeau.demo.entity.Zone;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -26,4 +27,13 @@ public interface ZoneService {
      * @return created Zone
      */
     Zone createZone(Zone zone);
+
+    /**
+     * get all zones in an inventory
+     *
+     * @return list of Zone
+     */
+    List<Zone> getZonesByInventoryId(String inventoryId);
+
+    ResponseEntity<String> deleteZone(String id);
 }

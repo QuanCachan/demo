@@ -1,6 +1,7 @@
 package fr.mirabeau.demo.service.internal.dao;
 
 import fr.mirabeau.demo.entity.Inventory;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -19,4 +20,8 @@ public interface InventoryDao {
      * @return all Inventories
      */
     List<Inventory> getAllInventories();
+
+    Inventory createInventory(Inventory inventory);
+
+    ResponseEntity<String> deleteInventory(String id);
 }

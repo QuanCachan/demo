@@ -1,6 +1,7 @@
 package fr.mirabeau.demo.service.internal.dao;
 
 import fr.mirabeau.demo.entity.Zone;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -26,4 +27,8 @@ public interface ZoneDao {
      * @return created Zone
      */
     Zone createZone(Zone zone);
+
+    List<Zone> getZonesByInventoryId(String inventoryId);
+
+    ResponseEntity<String> deleteZone(String id);
 }

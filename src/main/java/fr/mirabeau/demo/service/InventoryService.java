@@ -1,6 +1,8 @@
 package fr.mirabeau.demo.service;
 
 import fr.mirabeau.demo.entity.Inventory;
+import fr.mirabeau.demo.entity.Zone;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -19,4 +21,14 @@ public interface InventoryService {
      * @return all inventories
      */
     List<Inventory> getAllInventories();
+
+
+    /**
+     * Create a new Inventory
+     *
+     * @return created Inventory
+     */
+    Inventory createInventory(Inventory inventory);
+
+    ResponseEntity<String> deleteInventory(String id);
 }

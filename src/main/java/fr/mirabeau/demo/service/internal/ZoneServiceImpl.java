@@ -3,6 +3,7 @@ package fr.mirabeau.demo.service.internal;
 import fr.mirabeau.demo.entity.Zone;
 import fr.mirabeau.demo.service.ZoneService;
 import fr.mirabeau.demo.service.internal.dao.ZoneDao;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +30,16 @@ public class ZoneServiceImpl implements ZoneService {
     @Override
     public Zone createZone(Zone zone) {
         return zoneDao.createZone(zone);
+    }
+
+    @Override
+    public List<Zone> getZonesByInventoryId(String inventoryId) {
+        return zoneDao.getZonesByInventoryId(inventoryId);
+    }
+
+    @Override
+    public ResponseEntity<String> deleteZone(String id) {
+        return zoneDao.deleteZone(id);
     }
 
 
