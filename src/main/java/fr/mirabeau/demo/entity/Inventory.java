@@ -9,6 +9,13 @@ public class Inventory {
     public Inventory() {
     }
 
+    public Inventory(String id, String name, String description, String createdDate) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.createdDate = createdDate;
+    }
+
     public String getId() {
         return id;
     }
