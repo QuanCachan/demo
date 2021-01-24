@@ -2,6 +2,7 @@ package fr.mirabeau.demo.entity;
 
 public class Inventory {
     private String id;
+    private String publicId;
     private String name;
     private String description;
     private String createdDate;
@@ -35,5 +36,13 @@ public class Inventory {
 
     public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getPublicId() {
+        return publicId;
+    }
+
+    public void setPublicId(String publicId) {
+        this.publicId = publicId;
     }
 }

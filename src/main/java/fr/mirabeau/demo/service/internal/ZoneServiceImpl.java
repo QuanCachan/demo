@@ -33,13 +33,29 @@ public class ZoneServiceImpl implements ZoneService {
     }
 
     @Override
+    public Zone updateZone(Zone zone) {
+        return zoneDao.updateZone(zone);
+    }
+
+    @Override
     public List<Zone> getZonesByInventoryId(String inventoryId) {
         return zoneDao.getZonesByInventoryId(inventoryId);
+    }
+
+
+    @Override
+    public Zone getZoneByPublicId(String publicId) {
+        return zoneDao.getZoneByPublicId(publicId);
     }
 
     @Override
     public ResponseEntity<String> deleteZone(String id) {
         return zoneDao.deleteZone(id);
+    }
+
+    @Override
+    public ResponseEntity<String> deleteZoneByPublicId(String publicId) {
+        return zoneDao.deleteZoneByPublicId(publicId);
     }
 
 

@@ -29,6 +29,10 @@ public interface ZoneDao {
     Zone createZone(Zone zone);
 
     List<Zone> getZonesByInventoryId(String inventoryId);
+    Zone getZoneByPublicId(String publicId);
+    Zone updateZone(Zone zone);
 
+    ResponseEntity<String> deleteZoneByPublicId(String publicId);
     ResponseEntity<String> deleteZone(String id);
+
 }
