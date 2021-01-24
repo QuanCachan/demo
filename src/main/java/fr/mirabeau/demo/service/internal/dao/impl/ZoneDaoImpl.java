@@ -36,8 +36,32 @@ public class ZoneDaoImpl implements ZoneDao {
         IDocumentSession session = DocumentStoreHolder.getStore().openSession();
         zone.setCreatedDate(LocalDateTime.now().toString());
         session.store(zone);
+        if(zone.getId() != null){
+            String ravenId = zone.getId();
+            String subStringId = ravenId.substring(ravenId.lastIndexOf("/") + 1);
+            zone.setPublicId("Z-"+subStringId);
+        }
         session.saveChanges();
         return zone;
+    }
+
+    @Override
+    public Zone updateZone(Zone zone) {
+        //TODO: check name unicity before creating new
+        IDocumentSession session = DocumentStoreHolder.getStore().openSession();
+        System.out.println("updateZone " );
+        Zone result = session.query(Zone.class)
+                .whereEquals("publicId", zone.getPublicId())
+                .toList().get(0);
+        System.out.println("result zone updated ==> " +result);
+        if(result != null){
+            result.setDescription(zone.getDescription());
+            result.setName(zone.getName());
+            result.setRfid(zone.getRfid());
+            session.saveChanges();
+        }
+        session.close();
+        return result;
     }
 
     @Override
@@ -51,10 +75,36 @@ public class ZoneDaoImpl implements ZoneDao {
     }
 
     @Override
+    public Zone getZoneByPublicId(String publicId) {
+        IDocumentSession session = DocumentStoreHolder.getStore().openSession();
+        Zone result = session.query(Zone.class)
+                .whereEquals("publicId", publicId)
+                .toList().get(0); // send query
+        session.close();
+        return result;
+    }
+
+    @Override
     public ResponseEntity<String> deleteZone(String id) {
         try {
             IDocumentSession session = DocumentStoreHolder.getStore().openSession();
             session.delete("zones/"+id);
+            session.saveChanges();
+            session.close();
+            return new ResponseEntity<>("the record has been successfully deleted", HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Override
+    public ResponseEntity<String> deleteZoneByPublicId (String publicId) {
+        try {
+            IDocumentSession session = DocumentStoreHolder.getStore().openSession();
+            Zone result = session.query(Zone.class)
+                    .whereEquals("publicId", publicId)
+                    .toList().get(0);
+            session.delete(result.getId());
             session.saveChanges();
             session.close();
             return new ResponseEntity<>("the record has been successfully deleted", HttpStatus.OK);

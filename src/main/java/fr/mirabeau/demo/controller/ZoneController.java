@@ -3,7 +3,6 @@ package fr.mirabeau.demo.controller;
 import fr.mirabeau.demo.entity.Zone;
 import fr.mirabeau.demo.service.ZoneService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +20,11 @@ public class ZoneController {
         return zoneService.getZoneByName(name);
     }
 
+    @GetMapping(value = "/{publicId}")
+    public Zone getZoneByPublicId(@PathVariable String publicId) {
+        return zoneService.getZoneByPublicId(publicId);
+    }
+
     @GetMapping("")
     public List<Zone> getAllZones(@RequestParam(name = "inventoryId", required = false)
                                           String inventoryId) {
@@ -34,6 +38,16 @@ public class ZoneController {
     @PostMapping("")
     public Zone createZone(@RequestBody Zone zone) {
         return zoneService.createZone(zone);
+    }
+
+    @PostMapping("/{publicId}")
+    public Zone updateZone(@PathVariable String publicId,@RequestBody Zone zone) {
+        System.out.println("zone ==> " +zone.getPublicId());
+        System.out.println("publicId ==> " +publicId);
+
+        if(!zone.getPublicId().equals(publicId)) return null;
+        System.out.println("OK");
+        return zoneService.updateZone(zone);
     }
 
     @DeleteMapping(value = "/zones/{id}")

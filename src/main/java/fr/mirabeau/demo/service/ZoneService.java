@@ -28,6 +28,8 @@ public interface ZoneService {
      */
     Zone createZone(Zone zone);
 
+    Zone updateZone(Zone zone);
+
     /**
      * get all zones in an inventory
      *
@@ -35,5 +37,9 @@ public interface ZoneService {
      */
     List<Zone> getZonesByInventoryId(String inventoryId);
 
+    Zone getZoneByPublicId(String publicId);
+
     ResponseEntity<String> deleteZone(String id);
+    ResponseEntity<String> deleteZoneByPublicId(String publicId);
+
 }
