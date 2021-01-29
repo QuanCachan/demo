@@ -39,7 +39,18 @@ public interface ZoneService {
 
     Zone getZoneByPublicId(String publicId);
 
+    /**
+     * deleted the selected in an inventory by it RavenDB ID (ex: "zones/67-A")
+     *
+     * @return list of resting Zones in that inventory
+     */
     ResponseEntity<String> deleteZone(String id);
-    ResponseEntity<String> deleteZoneByPublicId(String publicId);
+
+    /**
+     * deleted the selected in an inventory by it public ID (ex: "67-A")
+     *
+     * @return list of resting Zones in that inventory
+     */
+    List<Zone> deleteZoneByPublicId(String publicId);
 
 }

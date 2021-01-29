@@ -1,6 +1,7 @@
 package fr.mirabeau.demo.service.internal;
 
 import fr.mirabeau.demo.entity.Inventory;
+import fr.mirabeau.demo.entity.Zone;
 import fr.mirabeau.demo.service.InventoryService;
 import fr.mirabeau.demo.service.internal.dao.InventoryDao;
 import org.springframework.http.ResponseEntity;
@@ -34,5 +35,10 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     public ResponseEntity<String> deleteInventory(String id) {
         return inventoryDao.deleteInventory(id);
+    }
+
+    @Override
+    public Inventory createInventoryZone(Zone zone) {
+        return inventoryDao.createInventoryZone(zone);
     }
 }

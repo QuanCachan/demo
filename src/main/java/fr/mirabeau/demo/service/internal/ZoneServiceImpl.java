@@ -54,7 +54,7 @@ public class ZoneServiceImpl implements ZoneService {
     }
 
     @Override
-    public ResponseEntity<String> deleteZoneByPublicId(String publicId) {
+    public List<Zone> deleteZoneByPublicId(String publicId) {
         return zoneDao.deleteZoneByPublicId(publicId);
     }
 

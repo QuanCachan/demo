@@ -31,4 +31,11 @@ public interface InventoryService {
     Inventory createInventory(Inventory inventory);
 
     ResponseEntity<String> deleteInventory(String id);
+
+    /**
+     * Create a new Zone for current Inventory
+     *
+     * @return Inventory with new Zone
+     */
+    Inventory createInventoryZone(Zone zone);
 }

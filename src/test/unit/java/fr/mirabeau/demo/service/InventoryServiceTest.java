@@ -19,8 +19,6 @@ import java.util.List;
 @WebMvcTest(InventoryService.class)
 class InventoryServiceTest {
 
-    public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
-
     private final List<Inventory> db = new ArrayList<>();
 
     @MockBean

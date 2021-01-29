@@ -70,5 +70,6 @@ class InventoryControllerTest {
 
     @Test
     void deleteInventory() {
+
     }
 }

@@ -13,6 +13,9 @@ import java.util.List;
 
 @Repository
 public class ZoneDaoImpl implements ZoneDao {
+
+    private static final String ZONE_ID_PREFIX = "zones/";
+
     @Override
     public List<Zone> getZoneByName(String name) {
         IDocumentSession session = DocumentStoreHolder.getStore().openSession();
@@ -36,10 +39,10 @@ public class ZoneDaoImpl implements ZoneDao {
         IDocumentSession session = DocumentStoreHolder.getStore().openSession();
         zone.setCreatedDate(LocalDateTime.now().toString());
         session.store(zone);
-        if(zone.getId() != null){
+        if (zone.getId() != null) {
             String ravenId = zone.getId();
             String subStringId = ravenId.substring(ravenId.lastIndexOf("/") + 1);
-            zone.setPublicId("Z-"+subStringId);
+            zone.setPublicId("Z-" + subStringId);
         }
         session.saveChanges();
         return zone;
@@ -49,12 +52,12 @@ public class ZoneDaoImpl implements ZoneDao {
     public Zone updateZone(Zone zone) {
         //TODO: check name unicity before creating new
         IDocumentSession session = DocumentStoreHolder.getStore().openSession();
-        System.out.println("updateZone " );
+        System.out.println("updateZone ");
         Zone result = session.query(Zone.class)
                 .whereEquals("publicId", zone.getPublicId())
                 .toList().get(0);
-        System.out.println("result zone updated ==> " +result);
-        if(result != null){
+        System.out.println("result zone updated ==> " + result);
+        if (result != null) {
             result.setDescription(zone.getDescription());
             result.setName(zone.getName());
             result.setRfid(zone.getRfid());
@@ -85,31 +88,31 @@ public class ZoneDaoImpl implements ZoneDao {
     }
 
     @Override
-    public ResponseEntity<String> deleteZone(String id) {
+    public ResponseEntity<String> deleteZone(String zoneId) {
         try {
             IDocumentSession session = DocumentStoreHolder.getStore().openSession();
-            session.delete("zones/"+id);
+            session.delete("zones/" + zoneId);
             session.saveChanges();
             session.close();
             return new ResponseEntity<>("the record has been successfully deleted", HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
     @Override
-    public ResponseEntity<String> deleteZoneByPublicId (String publicId) {
-        try {
-            IDocumentSession session = DocumentStoreHolder.getStore().openSession();
-            Zone result = session.query(Zone.class)
-                    .whereEquals("publicId", publicId)
-                    .toList().get(0);
-            session.delete(result.getId());
-            session.saveChanges();
-            session.close();
-            return new ResponseEntity<>("the record has been successfully deleted", HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    public List<Zone> deleteZoneByPublicId(String publicId) {
+        IDocumentSession session = DocumentStoreHolder.getStore().openSession();
+        Zone selectedZone = session.query(Zone.class)
+                .whereEquals("publicId", publicId)
+                .toList().get(0);
+        String inventoryId = selectedZone.getInventoryId();
+        session.delete(selectedZone);
+        session.saveChanges();
+        List<Zone> result = session.query(Zone.class)
+                .whereEquals("inventoryId", inventoryId)
+                .toList();
+        session.close();
+        return result;
     }
 }
