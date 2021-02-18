@@ -1,16 +1,16 @@
 package fr.mirabeau.demo.entity;
 
-public class Inventory {
+public class Location {
     private String id;
     private String publicId;
     private String name;
     private String description;
     private String createdDate;
 
-    public Inventory() {
+    public Location() {
     }
 
-    public Inventory(String id, String name, String description, String createdDate) {
+    public Location(String id, String name, String description, String createdDate) {
         this.id = id;
         this.name = name;
         this.description = description;

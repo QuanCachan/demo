@@ -1,9 +1,9 @@
 package fr.mirabeau.demo.service.internal.dao.impl;
 
-import fr.mirabeau.demo.entity.Inventory;
+import fr.mirabeau.demo.entity.Location;
 import fr.mirabeau.demo.entity.Zone;
 import fr.mirabeau.demo.service.ZoneService;
-import fr.mirabeau.demo.service.internal.dao.InventoryDao;
+import fr.mirabeau.demo.service.internal.dao.LocationDao;
 import fr.mirabeau.demo.service.internal.dao.impl.dbconnection.DocumentStoreHolder;
 import net.ravendb.client.documents.session.IDocumentSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +15,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public class InventoryDaoImpl implements InventoryDao {
+public class LocationDaoImpl implements LocationDao {
 
     @Autowired
     private ZoneService zoneService;
 
     @Override
-    public List<Inventory> getInventoryByName(String name) {
+    public List<Location> getLocationByName(String name) {
         IDocumentSession session = DocumentStoreHolder.getStore().openSession();
-        List<Inventory> results = session.query(Inventory.class)
+        List<Location> results = session.query(Location.class)
                 .whereEquals("name", name)
                 .toList(); // send query
         session.close();
@@ -31,37 +31,42 @@ public class InventoryDaoImpl implements InventoryDao {
     }
 
     @Override
-    public List<Inventory> getAllInventories() {
+    public List<Location> getAllLocations() {
         IDocumentSession session = DocumentStoreHolder.getStore().openSession();
-        List<Inventory> results = session.query(Inventory.class)
+        List<Location> results = session.query(Location.class)
                 .toList();
         session.close();
         return results;
     }
 
     @Override
-    public Inventory createInventory(Inventory inventory) {
+    public Location createLocation(Location location) {
         IDocumentSession session = DocumentStoreHolder.getStore().openSession();
-        inventory.setCreatedDate(LocalDateTime.now().toString());
-        session.store(inventory);
+        location.setCreatedDate(LocalDateTime.now().toString());
+        session.store(location);
+        String locationRavenId = location.getId();
+        if (locationRavenId != null) {
+            String subStringId = locationRavenId.substring(locationRavenId.lastIndexOf("/") + 1);
+            location.setPublicId(subStringId);
+        }
         session.saveChanges();
         session.close();
-        return inventory;
+        return location;
     }
 
     @Override
-    public ResponseEntity<String> deleteInventory(String id) {
+    public ResponseEntity<String> deleteLocation(String id) {
         try {
             IDocumentSession session = DocumentStoreHolder.getStore().openSession();
             System.out.println("ID => " +id);
 
             List<Zone> zones = session.query(Zone.class)
-                    .whereEquals("inventoryId", "inventories/" +id)
+                    .whereEquals("locationId", "locations/" +id)
                     .toList();
             for(Zone z : zones){
                 session.delete(z.getId());
             }
-            session.delete("inventories/"+id);
+            session.delete("locations/"+id);
             session.saveChanges();
             session.close();
             return new ResponseEntity<>("the record has been successfully deleted", HttpStatus.OK);
@@ -71,7 +76,7 @@ public class InventoryDaoImpl implements InventoryDao {
     }
 
     @Override
-    public Inventory createInventoryZone(Zone zone) {
+    public Location createLocationZone(Zone zone) {
         IDocumentSession session = DocumentStoreHolder.getStore().openSession();
         zone.setCreatedDate(LocalDateTime.now().toString());
         session.store(zone);
@@ -82,6 +87,6 @@ public class InventoryDaoImpl implements InventoryDao {
         }
         session.saveChanges();
         session.close();
-        return session.load(Inventory.class, zone.getInventoryId());
+        return session.load(Location.class, zone.getLocationId());
     }
 }

@@ -3,8 +3,8 @@ package fr.mirabeau.demo.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import fr.mirabeau.demo.entity.Inventory;
-import fr.mirabeau.demo.service.InventoryService;
+import fr.mirabeau.demo.entity.Location;
+import fr.mirabeau.demo.service.LocationService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -22,15 +22,15 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(InventoryController.class)
-class InventoryControllerTest {
+@WebMvcTest(LocationController.class)
+class LocationControllerTest {
     public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), StandardCharsets.UTF_8);
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    InventoryService inventoryService;
+    LocationService locationService;
 
     @Test
     void getInventoryByName() {
@@ -39,20 +39,20 @@ class InventoryControllerTest {
 
     @Test
     void getAllInventories() throws Exception {
-        Mockito.when(inventoryService.getAllInventories())
+        Mockito.when(locationService.getAllLocations())
                 .thenReturn(Collections.emptyList());
 
         RequestBuilder request = MockMvcRequestBuilders.get("/inventories/").accept(MediaType.APPLICATION_JSON);
         mockMvc.perform(request).andReturn();
 
-        Mockito.verify(inventoryService).getAllInventories();
+        Mockito.verify(locationService).getAllLocations();
     }
 
     @Test
     void createInventory() throws Exception {
-        Inventory newInvent = new Inventory("4","Nice", "another inventory in France", "01/02/2021");
+        Location newInvent = new Location("4","Nice", "another inventory in France", "01/02/2021");
 
-        Mockito.when(inventoryService.createInventory(newInvent))
+        Mockito.when(locationService.createLocation(newInvent))
                 .thenReturn(newInvent);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -64,8 +64,8 @@ class InventoryControllerTest {
                 .content(newInventInStr);
         mockMvc.perform(request).andReturn();
 
-        ArgumentCaptor<Inventory> argument = ArgumentCaptor.forClass(Inventory.class);
-        Mockito.verify(inventoryService).createInventory(argument.capture());
+        ArgumentCaptor<Location> argument = ArgumentCaptor.forClass(Location.class);
+        Mockito.verify(locationService).createLocation(argument.capture());
     }
 
     @Test

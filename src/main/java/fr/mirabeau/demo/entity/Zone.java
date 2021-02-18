@@ -3,7 +3,7 @@ package fr.mirabeau.demo.entity;
 
 public class Zone {
     private String name;
-    private String inventoryId;
+    private String locationId;
     private String id ;
     private String rfid;
     private String publicId ;
@@ -26,12 +26,12 @@ public class Zone {
         this.name = name;
     }
 
-    public String getInventoryId() {
-        return inventoryId;
+    public String getLocationId() {
+        return locationId;
     }
 
-    public void setInventoryId(String inventoryId) {
-        this.inventoryId = inventoryId;
+    public void setLocationId(String locationId) {
+        this.locationId = locationId;
     }
     public String getId() {
         return id;

@@ -10,7 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ContextConfiguration(classes = DemoApplication.class)
 @DataMongoTest
 @ExtendWith(SpringExtension.class)
-class InventoryControllerITTest {
+class LocationControllerITTest {
 
     @Test
     void getInventoryByName() {

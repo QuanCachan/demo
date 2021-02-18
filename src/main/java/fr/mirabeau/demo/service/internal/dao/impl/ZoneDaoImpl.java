@@ -106,7 +106,7 @@ public class ZoneDaoImpl implements ZoneDao {
         Zone selectedZone = session.query(Zone.class)
                 .whereEquals("publicId", publicId)
                 .toList().get(0);
-        String inventoryId = selectedZone.getInventoryId();
+        String inventoryId = selectedZone.getLocationId();
         session.delete(selectedZone);
         session.saveChanges();
         List<Zone> result = session.query(Zone.class)
